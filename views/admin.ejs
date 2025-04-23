@@ -1,61 +1,140 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Admin Panel</title>
-  </head>
-  <body>
-    <h2>Upload Gambar</h2>
-    <form action="/admin" method="POST" enctype="multipart/form-data">
-      <input type="text" name="text" placeholder="Deskripsi" required /><br />
-      <input type="file" name="image" required /><br />
-      <button type="submit">Upload</button>
-    </form>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Admin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
 
-    <hr />
+    h2 {
+      margin-top: 30px;
+    }
 
-    <h3>Gambar yang Sudah Diupload</h3>
-    <% images.forEach(image => { %>
-      <div>
-        <p><%= image.text %></p>
-        <img src="<%= image.imagePath %>" width="200" />
-      </div>
+    .event-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .event-item {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+    }
+
+    .event-item img {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .event-item p {
+      margin: 5px 0;
+    }
+
+    .event-item form {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .logout-button {
+      margin-top: 40px;
+    }
+
+    #searchOpen {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dashboard Admin</h1>
+
+  <!-- Tombol tambah event -->
+  <a href="/admin/events/new">
+    <button>+ Tambah Event</button>
+  </a>
+
+  <!-- Section: Event Terbuka -->
+  <h2>Event yang Masih Dibuka</h2>
+
+  <!-- Input pencarian -->
+  <input type="text" id="searchOpen" placeholder="Cari event berdasarkan judul, deskripsi, dll..." />
+
+  <!-- List event terbuka -->
+  <ul class="event-list" id="openEventsList">
+    <% openEvents.forEach(event => { %>
+      <li class="event-item">
+        <img src="<%= event.poster %>" width="200" alt="Poster <%= event.title %>">
+        <strong><%= event.title %></strong><br />
+        <p><strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %></p>
+        <p><strong>Deskripsi:</strong> <%= event.description %></p>
+        <p><strong>Status:</strong> Terbuka</p>
+
+        <!-- Tombol aksi -->
+        <form action="/admin/events/<%= event._id %>/registrants" method="GET">
+          <button>Lihat Pendaftar</button>
+        </form>
+        <form action="/admin/events/<%= event._id %>/edit" method="GET">
+          <button>Edit</button>
+        </form>
+        <form action="/admin/events/<%= event._id %>/close" method="POST">
+          <button>Tutup Registrasi</button>
+        </form>
+      </li>
     <% }) %>
+  </ul>
 
-    <hr />
+  <!-- Section: Event Ditutup -->
+  <h2>Event yang Sudah Berlalu / Ditutup</h2>
+  <ul class="event-list">
+    <% closedEvents.forEach(event => { %>
+      <li class="event-item" style="background-color: #f5f5f5;">
+        <img src="<%= event.poster %>" width="200" alt="Poster <%= event.title %>">
+        <strong><%= event.title %></strong><br />
+        <p><strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %></p>
+        <p><strong>Deskripsi:</strong> <%= event.description %></p>
+        <p><strong>Status:</strong> Registrasi Ditutup</p>
 
-    <h2>Daftar Event</h2>
-    <a href="/admin/events/new">+ Tambah Event</a>
+        <!-- Tombol aksi -->
+        <form action="/admin/events/<%= event._id %>/registrants" method="GET">
+          <button>Lihat Pendaftar</button>
+        </form>
+        <form action="/admin/events/<%= event._id %>/edit" method="GET">
+          <button>Edit</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
 
-    <% if (typeof events !== 'undefined' && events.length > 0) { %>
-      <% events.forEach(event => { %>
-        <div style="margin-top: 1rem; padding: 1rem; border: 1px solid #ccc;">
-          <h3><%= event.title %></h3>
-          <p><strong>Tanggal:</strong> <%= event.date.toDateString() %></p>
-          <p><strong>Deskripsi:</strong> <%= event.description %></p>
-          <p><strong>Status Registrasi:</strong> 
-            <%= event.isRegistrationClosed ? "Ditutup" : "Terbuka" %>
-          </p>
-          <img src="<%= event.poster %>" width="200" /><br /><br />
+  <!-- Tombol logout -->
+  <form action="/logout" method="POST" class="logout-button">
+    <button type="submit">Logout</button>
+  </form>
 
-          <form action="/admin/events/<%= event._id %>/edit" method="GET" style="display:inline;">
-            <button type="submit">Edit</button>
-          </form>
+  <!-- Script pencarian manual -->
+  <script>
+    // Menjalankan filter saat pengguna mengetik
+    document.getElementById("searchOpen").addEventListener("input", function () {
+      const query = this.value.toLowerCase(); // Ambil teks input
+      const items = document.querySelectorAll("#openEventsList .event-item"); // Ambil semua elemen event
 
-          <% if (!event.isRegistrationClosed) { %>
-            <form action="/admin/events/<%= event._id %>/close" method="POST" style="display:inline;">
-              <button type="submit">Tutup Registrasi</button>
-            </form>
-          <% } %>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p>Belum ada event.</p>
-    <% } %>
-
-    <hr />
-
-    <form action="/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
-  </body>
+      items.forEach(item => {
+        const text = item.innerText.toLowerCase(); // Ambil seluruh isi teks dari tiap item
+        item.style.display = text.includes(query) ? "" : "none"; // Tampilkan atau sembunyikan
+      });
+    });
+  </script>
+</body>
 </html>

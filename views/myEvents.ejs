@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Saya</title>
+</head>
+<body>
+  <h2>Event yang Sudah Kamu Daftarkan</h2>
+
+  <% if (registrations.length === 0) { %>
+    <p>Kamu belum mendaftar ke event manapun.</p>
+  <% } else { %>
+    <ul>
+      <% registrations.forEach(r => { %>
+        <li>
+          <strong><%= r.eventId.title %></strong> - <%= new Date(r.eventId.date).toDateString() %>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <a href="/profile">← Kembali ke Profil</a>
+</body>
+</html>

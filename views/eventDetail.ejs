@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail Event</title>
+</head>
+<body>
+  <h1><%= event.title %></h1>
+  <img src="<%= event.poster %>" width="200" />
+  <p><strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %></p>
+  <p><%= event.description %></p>
+  <p>Status: <%= event.isRegistrationClosed ? "Registrasi Ditutup" : "Terbuka" %></p>
+
+  <% if (!event.isRegistrationClosed) { %>
+    <form action="/event/<%= event._id %>/register" method="GET">
+      <button type="submit">Daftar</button>
+    </form>
+  <% } else { %>
+    <p style="color:red;">Registrasi sudah ditutup.</p>
+  <% } %>
+
+  <a href="/dashboard">← Kembali</a>
+</body>
+</html>

@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
-const ImageModel = require("../models/image");
+const Event = require("../models/event");
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ const isAdmin = (req, res, next) => {
   ) {
     next();
   } else {
-    res.redirect("/login"); // atau "/unauthorized"
+    res.redirect("/login");
   }
 };
 
@@ -27,36 +27,25 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Tampilkan form dan daftar gambar
+// Halaman admin: daftar event
 router.get("/", isAuth, isAdmin, async (req, res) => {
-  const images = await ImageModel.find().sort({ createdAt: -1 });
-  res.render("admin", { images });
-});
+  try {
+    const events = await Event.find().sort({ date: 1 });
 
-// Proses upload gambar
-router.post("/", isAuth, isAdmin, upload.single("image"), async (req, res) => {
-  const { text } = req.body;
-  const imagePath = "/uploads/" + req.file.filename;
+    const openEvents = events.filter(e => !e.isRegistrationClosed);
+    const closedEvents = events.filter(e => e.isRegistrationClosed);
 
-  // Simpan ke MongoDB
-  await ImageModel.create({
-    text,
-    imagePath,
-    uploadedBy: req.session.username, // << ini penting
-  });
-
-  res.redirect("/admin");
-});
-
-// console.log("Uploaded file path:", imagePath);
-const Event = require("../models/event");
-
-// Form tambah event
-router.get("/", isAuth, isAdmin, async (req, res) => {
-  const images = await ImageModel.find().sort({ createdAt: -1 });
-  const events = await Event.find().sort({ createdAt: -1 });
-
-  res.render("admin", { images, events });
+    res.render("admin", {
+      openEvents,
+      closedEvents
+    });
+  } catch (err) {
+    console.error("Gagal memuat event:", err);
+    res.render("admin", {
+      openEvents: [],
+      closedEvents: []
+    });
+  }
 });
 
 // Proses tambah event
@@ -66,6 +55,10 @@ router.post("/events", isAuth, isAdmin, upload.single("poster"), async (req, res
 
   await Event.create({ title, date, description, poster: posterPath });
   res.redirect("/admin");
+});
+
+router.get("/events/new", isAuth, isAdmin, (req, res) => {
+  res.render("addEvent");
 });
 
 // Form edit event
@@ -91,6 +84,33 @@ router.post("/events/:id/update", isAuth, isAdmin, async (req, res) => {
 router.post("/events/:id/close", isAuth, isAdmin, async (req, res) => {
   await Event.findByIdAndUpdate(req.params.id, { isRegistrationClosed: true });
   res.redirect("/admin");
+});
+
+const Registration = require("../models/registration");
+
+// Tampilkan daftar pendaftar untuk event tertentu
+router.get("/events/:id/registrants", isAuth, isAdmin, async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    const registrants = await Registration.find({ eventId: req.params.id });
+
+    res.render("registrantList", { event, registrants });
+  } catch (err) {
+    console.error("Gagal ambil data registrant:", err);
+    res.send("Terjadi kesalahan.");
+  }
+});
+
+router.post("/registrants/:id/delete", isAuth, isAdmin, async (req, res) => {
+  try {
+    const regId = req.params.id;
+    const registration = await Registration.findByIdAndDelete(regId);
+
+    res.redirect("back"); // kembali ke halaman sebelumnya
+  } catch (err) {
+    console.error("Gagal menghapus pendaftar:", err);
+    res.redirect("back");
+  }
 });
 
 module.exports = router;

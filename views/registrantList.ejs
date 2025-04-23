@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pendaftar Event</title>
+
+  <!-- Tambahkan DataTables CSS & jQuery -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('#registrantsTable').DataTable();
+    });
+  </script>
+</head>
+<body>
+  <h2>Daftar Pendaftar untuk "<%= event.title %>"</h2>
+
+  <% if (registrants.length === 0) { %>
+    <p>Belum ada pendaftar.</p>
+  <% } else { %>
+    <table id="registrantsTable" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Email</th>
+          <th>Telepon</th>
+          <th>Jenis Kelamin</th>
+          <th>Tanggal Lahir</th>
+          <th>Alamat</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% registrants.forEach(r => { %>
+          <tr>
+            <td><%= r.name %></td>
+            <td><%= r.email %></td>
+            <td><%= r.phone %></td>
+            <td><%= r.gender %></td>
+            <td><%= new Date(r.dob).toLocaleDateString() %></td>
+            <td><%= r.address %></td>
+            <td>
+              <form action="/admin/registrants/<%= r._id %>/delete" method="POST" onsubmit="return confirm('Yakin ingin menghapus pendaftar ini?');">
+                <button type="submit">Hapus</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <br>
+  <a href="/admin">← Kembali ke Dashboard Admin</a>
+</body>
+</html>

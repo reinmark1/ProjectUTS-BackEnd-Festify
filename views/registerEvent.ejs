@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Pendaftaran</title>
+</head>
+<body>
+  <h1>Daftar ke Event: <%= event.title %></h1>
+  <form action="/event/<%= event._id %>/register" method="POST">
+    <label>Nama Lengkap:</label><br />
+    <input type="text" name="name" required /><br />
+
+    <label>Email:</label><br />
+    <input type="email" name="email" required /><br />
+
+    <label>Nomor Telepon:</label><br />
+    <input type="text" name="phone" /><br />
+
+    <label>Jenis Kelamin:</label><br />
+    <select name="gender" required>
+      <option value="Laki-laki">Laki-laki</option>
+      <option value="Perempuan">Perempuan</option>
+    </select><br />
+
+    <label>Tanggal Lahir:</label><br />
+    <input type="date" name="dob" required /><br />
+
+    <label>Alamat/Domisili:</label><br />
+    <textarea name="address" required></textarea><br />
+
+    <button type="submit">Kirim Pendaftaran</button>
+  </form>
+</body>
+</html>

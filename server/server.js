@@ -5,8 +5,9 @@ const mongoDBSession = require("connect-mongodb-session")(session);
 const bcrypt = require("bcryptjs");
 const path = require("path");
 
-const UserModel = require("../models/user"); // Pastikan path ini benar
-const adminRoutes = require("../routes/admin"); // Pastikan path ini benar
+const UserModel = require("../models/user"); 
+const adminRoutes = require("../routes/admin"); 
+const eventRoutes = require("../routes/event");
 
 const app = express();
 
@@ -26,7 +27,7 @@ const store = new mongoDBSession({
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use(
   session({
@@ -65,12 +66,7 @@ app.post("/login", async (req, res) => {
     req.session.isAuth = true;
     req.session.username = user.username;
     req.session.role = user.role;
-
-    // Jika admin, arahkan ke halaman admin
-    if (user.role === "admin") {
-      req.session.isAdminKey = "abc123superkey";
-      return res.redirect("/admin");
-    }
+    req.session.email = user.email;
 
     res.redirect("/dashboard");
   } catch (err) {
@@ -103,25 +99,42 @@ app.post("/register", async (req, res) => {
   res.redirect("/login");
 });
 
-const Image = require("../models/image"); // Tambahkan di atas
+const Image = require("../models/image");
+const Event = require("../models/event");
 
 app.get("/dashboard", isAuth, async (req, res) => {
   try {
     const images = await Image.find({ uploadedBy: "admin" }).sort({
       uploadedAt: -1,
     });
+
+    const allEvents = await Event.find().sort({ date: 1 });
+
+    const openEvents = allEvents.filter(event => !event.isRegistrationClosed);
+    const closedEvents = allEvents.filter(event => event.isRegistrationClosed);
+
     res.render("dashboard", {
       username: req.session.username,
       images,
+      openEvents,
+      closedEvents,
     });
   } catch (err) {
-    console.error("Error loading images:", err);
+    console.error("Error loading dashboard:", err);
     res.render("dashboard", {
       username: req.session.username,
       images: [],
+      openEvents: [],
+      closedEvents: [],
     });
   }
 });
+
+
+app.get("/profile", isAuth, (req, res) => {
+  res.render("profile", { username: req.session.username });
+});
+
 
 app.post("/logout", (req, res) => {
   req.session.destroy((err) => {
@@ -148,8 +161,17 @@ app.post("/loginAdmin", async (req, res) => {
   }
 });
 
+// Logout route untuk admin
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) throw err;
+    res.redirect("/login"); // ← redirect ke login page
+  });
+});
+
 // Router untuk fitur admin
 app.use("/admin", adminRoutes);
+app.use("/", eventRoutes);
 
 // Jalankan server
 app.listen(3000, () => console.log("Server running on port 3000"));
