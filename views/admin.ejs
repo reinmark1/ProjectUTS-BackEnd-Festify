@@ -15,11 +15,44 @@
 
     <h3>Gambar yang Sudah Diupload</h3>
     <% images.forEach(image => { %>
-    <div>
-      <p><%= image.text %></p>
-      <img src="<%= image.imagePath %>" width="200" />
-    </div>
+      <div>
+        <p><%= image.text %></p>
+        <img src="<%= image.imagePath %>" width="200" />
+      </div>
     <% }) %>
+
+    <hr />
+
+    <h2>Daftar Event</h2>
+    <a href="/admin/events/new">+ Tambah Event</a>
+
+    <% if (typeof events !== 'undefined' && events.length > 0) { %>
+      <% events.forEach(event => { %>
+        <div style="margin-top: 1rem; padding: 1rem; border: 1px solid #ccc;">
+          <h3><%= event.title %></h3>
+          <p><strong>Tanggal:</strong> <%= event.date.toDateString() %></p>
+          <p><strong>Deskripsi:</strong> <%= event.description %></p>
+          <p><strong>Status Registrasi:</strong> 
+            <%= event.isRegistrationClosed ? "Ditutup" : "Terbuka" %>
+          </p>
+          <img src="<%= event.poster %>" width="200" /><br /><br />
+
+          <form action="/admin/events/<%= event._id %>/edit" method="GET" style="display:inline;">
+            <button type="submit">Edit</button>
+          </form>
+
+          <% if (!event.isRegistrationClosed) { %>
+            <form action="/admin/events/<%= event._id %>/close" method="POST" style="display:inline;">
+              <button type="submit">Tutup Registrasi</button>
+            </form>
+          <% } %>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>Belum ada event.</p>
+    <% } %>
+
+    <hr />
 
     <form action="/logout" method="POST">
       <button type="submit">Logout</button>

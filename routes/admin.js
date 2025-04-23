@@ -17,7 +17,7 @@ const isAdmin = (req, res, next) => {
   ) {
     next();
   } else {
-    res.redirect("/dashboard");
+    res.redirect("/login"); // atau "/unauthorized"
   }
 };
 
@@ -49,5 +49,48 @@ router.post("/", isAuth, isAdmin, upload.single("image"), async (req, res) => {
 });
 
 // console.log("Uploaded file path:", imagePath);
+const Event = require("../models/event");
+
+// Form tambah event
+router.get("/", isAuth, isAdmin, async (req, res) => {
+  const images = await ImageModel.find().sort({ createdAt: -1 });
+  const events = await Event.find().sort({ createdAt: -1 });
+
+  res.render("admin", { images, events });
+});
+
+// Proses tambah event
+router.post("/events", isAuth, isAdmin, upload.single("poster"), async (req, res) => {
+  const { title, date, description } = req.body;
+  const posterPath = "/uploads/" + req.file.filename;
+
+  await Event.create({ title, date, description, poster: posterPath });
+  res.redirect("/admin");
+});
+
+// Form edit event
+router.get("/events/:id/edit", isAuth, isAdmin, async (req, res) => {
+  const event = await Event.findById(req.params.id);
+  res.render("editEvent", { event });
+});
+
+// Proses update event
+router.post("/events/:id/update", isAuth, isAdmin, async (req, res) => {
+  const { title, date, description } = req.body;
+
+  await Event.findByIdAndUpdate(req.params.id, {
+    title,
+    date,
+    description
+  });
+
+  res.redirect("/admin");
+});
+
+// Tutup registrasi
+router.post("/events/:id/close", isAuth, isAdmin, async (req, res) => {
+  await Event.findByIdAndUpdate(req.params.id, { isRegistrationClosed: true });
+  res.redirect("/admin");
+});
 
 module.exports = router;

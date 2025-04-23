@@ -130,6 +130,24 @@ app.post("/logout", (req, res) => {
   });
 });
 
+app.get("/loginAdmin", (req, res) => {
+  res.render("loginAdmin", { error: null });
+});
+
+app.post("/loginAdmin", async (req, res) => {
+  const { adminKey } = req.body;
+  
+  if (adminKey === "abc123superkey") {
+    req.session.isAuth = true; // wajib tambahkan ini juga!
+    req.session.role = "admin"; // simpan role di session
+    req.session.isAdminKey = adminKey; // Simpan kode di session
+
+    res.redirect("/admin"); // ARAHKAN KE DASHBOARD ADMIN
+  } else {
+    res.render("loginAdmin", { error: "Kode admin salah!" });
+  }
+});
+
 // Router untuk fitur admin
 app.use("/admin", adminRoutes);
 

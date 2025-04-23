@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Admin</title>
+  </head>
+  <body>
+    <h3>Masukkan Kode Admin</h3>
+    <form action="/loginAdmin" method="POST">
+      <input type="text" name="adminKey" placeholder="Masukkan kode rahasia" required />
+      <button type="submit">Login Admin</button>
+    </form>
+
+    <% if (error) { %>
+      <p style="color: red;"><%= error %></p>
+    <% } %>
+
+    <a href="/login">Kembali ke login biasa</a>
+  </body>
+</html>
