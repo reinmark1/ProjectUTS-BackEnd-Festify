@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Node Auth</title>
+    <style>
+      button {
+        padding: 10px 17px;
+        margin-top: 1rem;
+        font-size: 1rem;
+        background: #eee;
+        border: 1px solid #333;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Selamat datang, <%= username %>!</h1>
+
+    <h2>Gambar dari Admin</h2>
+    
+    <% if (images.length === 0) { %>
+      <p>Belum ada gambar dari admin.</p>
+    <% } else { %>
+      <% images.forEach(image => { %>
+        <div style="margin-bottom: 20px">
+          <p><%= image.text %></p>
+          <img src="<%= image.imagePath %>" alt="gambar" width="200" />
+        </div>
+      <% }); %>
+    <% } %>
+    
+    <form method="POST" action="/logout">
+      <button type="submit">Logout</button>
+    </form>
+    
+  </body>
+</html>
