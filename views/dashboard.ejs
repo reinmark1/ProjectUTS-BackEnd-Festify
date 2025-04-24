@@ -4,68 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard | Node Auth</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
-      }
+    <link rel="stylesheet" href="/style/dashboard.css" />
 
-      button {
-        padding: 10px 17px;
-        margin-top: 1rem;
-        font-size: 1rem;
-        background: #eee;
-        border: 1px solid #333;
-        cursor: pointer;
-      }
-
-      .event-section {
-        margin-bottom: 30px;
-      }
-
-      .event-box {
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        padding: 10px;
-        border-radius: 6px;
-      }
-
-      .closed {
-        background-color: #f9f9f9;
-        opacity: 0.8;
-      }
-
-      select,
-      input[type="text"] {
-        margin: 10px 0;
-        padding: 8px;
-        font-size: 1rem;
-        width: 100%;
-      }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
-    <h1>Selamat datang, <%= username %>!</h1>
+    <nav class="navbar">
+      <a href="#" class="navbar-logo"><span>f</span>estify.</a>
+      <div class="user">
+        <a href="/profile">Profile</a>
+      </div>
+    </nav>
 
-    <a href="/profile">
-      <button>Profil</button>
-    </a>
+    <h1>Selamat datang, <%= username %>!</h1>
+    <h2>Event yang Bisa Kamu Daftari</h2>
 
     <!-- Event yang Masih Terbuka -->
     <section class="event-section">
-      <h2>Event yang Bisa Kamu Daftari</h2>
+      <div class="search">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Cari event berdasarkan judul, deskripsi, tanggal..."
+        />
+        <select class="sortSelect" id="sortSelect">
+          <option value="asc">Tanggal Terdekat</option>
+          <option value="desc">Tanggal Terjauh</option>
+        </select>
+      </div>
 
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="Cari event berdasarkan judul, deskripsi, tanggal..."
-      />
-      <select id="sortSelect">
-        <option value="asc">Tanggal Terdekat</option>
-        <option value="desc">Tanggal Terjauh</option>
-      </select>
-
-      <div id="openEventsContainer">
+      <div class="event" id="openEventsContainer">
         <% if (openEvents.length > 0) { %> <% openEvents.forEach(event => { %>
         <div
           class="event-box"
@@ -93,8 +62,6 @@
         <% } %>
       </div>
     </section>
-
-    <!-- tes github -->
 
     <!-- Event yang Sudah Ditutup -->
     <section class="event-section">

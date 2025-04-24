@@ -1,0 +1,99 @@
+:root {
+  --primary: #fff085;
+  --secondary: #fcb454;
+  --bg: #fef9e1;
+  --font: #454545;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-decoration: none;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg);
+  /* min-height: 2000px; */
+}
+/* navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  /* margin: 1.4rem; */
+  background-color: var(--secondary);
+  padding: 1.4rem 7%;
+  margin-bottom: 5rem;
+}
+
+.navbar .navbar-logo {
+  font-weight: bold;
+  font-size: 2.5rem;
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.navbar span {
+  color: var(--bg);
+  font-size: 3.5rem;
+}
+
+/* main */
+.container {
+  display: flex;
+  justify-content: center; /* tengah horizontal */
+  align-items: center; /* tengah vertical */
+}
+
+.login-form {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--secondary);
+  align-items: center;
+  max-width: 40rem;
+  border-radius: 2rem;
+}
+
+.login-form form {
+  /* background-color: red; */
+  padding: 2rem;
+  color: var(--font);
+}
+
+.login-form input {
+  padding: 0.2rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  gap: 2px;
+  border-style: none;
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+}
+
+.login-form button {
+  font-size: 1rem;
+  padding: 7px;
+  border-radius: 15px;
+  border-style: none;
+  color: var(--font);
+  cursor: pointer;
+  background-color: var(--bg);
+}
+
+.admin {
+  text-align: center;
+  padding-top: 10rem;
+}
+
+.admin button {
+  font-size: 1rem;
+  padding: 7px;
+  border-radius: 15px;
+  border-style: none;
+  color: var(--font);
+  background-color: var(--secondary);
+}

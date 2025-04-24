@@ -4,53 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | Node Auth</title>
-    <style>
-      .login-form {
-        width: 400px;
-        height: 400px;
-        margin: 1rem auto;
-      }
+    <link rel="stylesheet" href="/style/login-register.css" />
 
-      .input-group {
-        width: 100%;
-      }
-
-      .input-group label {
-        display: block;
-      }
-
-      .input-group input {
-        width: 100%;
-      }
-
-      button {
-        padding: 10px 17px;
-        margin-top: 1rem;
-        font-size: 1rem;
-        background: #eee;
-        border: 1px solid #333;
-        cursor: pointer;
-      }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
-    <div class="login-form">
-      <h3>Login Page</h3>
-      <form action="/login" method="POST">
-        <div class="input-group">
-          <label for="email">Email:</label>
-          <input type="email" name="email" />
-        </div>
-        <div class="input-group">
-          <label for="password">Password:</label>
-          <input type="password" name="password" />
-        </div>
-        <button>Login</button>
+    <nav class="navbar">
+      <a href="#" class="navbar-logo"><span>f</span>estify.</a>
+    </nav>
+    <section class="container">
+      <div class="login-form">
+        <h2>Login</h2>
+        <form action="/login" method="POST">
+          <div class="input-group">
+            <label for="email">Email:</label>
+            <input type="email" name="email" />
+          </div>
+          <div class="input-group">
+            <label for="password">Password:</label>
+            <input type="password" name="password" />
+          </div>
+          <button>Login</button>
+        </form>
+        <h3>Belum ada akun?</h3>
+        <a href="/register">Register</a>
+      </div>
+    </section>
+
+    <div class="admin">
+      <form action="/loginAdmin" method="GET">
+        <button type="submit">Login Admin</button>
       </form>
-      <a href="/register">Register</a>
     </div>
-    <form action="/loginAdmin" method="GET">
-      <button type="submit">Login Admin</button>
-    </form>    
   </body>
 </html>

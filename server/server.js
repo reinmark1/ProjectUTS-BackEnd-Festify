@@ -5,8 +5,8 @@ const mongoDBSession = require("connect-mongodb-session")(session);
 const bcrypt = require("bcryptjs");
 const path = require("path");
 
-const UserModel = require("../models/user"); 
-const adminRoutes = require("../routes/admin"); 
+const UserModel = require("../models/user");
+const adminRoutes = require("../routes/admin");
 const eventRoutes = require("../routes/event");
 
 const app = express();
@@ -27,6 +27,9 @@ const store = new mongoDBSession({
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/style", express.static(path.join(__dirname, "../style")));
+
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use(
@@ -110,8 +113,10 @@ app.get("/dashboard", isAuth, async (req, res) => {
 
     const allEvents = await Event.find().sort({ date: 1 });
 
-    const openEvents = allEvents.filter(event => !event.isRegistrationClosed);
-    const closedEvents = allEvents.filter(event => event.isRegistrationClosed);
+    const openEvents = allEvents.filter((event) => !event.isRegistrationClosed);
+    const closedEvents = allEvents.filter(
+      (event) => event.isRegistrationClosed
+    );
 
     res.render("dashboard", {
       username: req.session.username,
@@ -130,11 +135,9 @@ app.get("/dashboard", isAuth, async (req, res) => {
   }
 });
 
-
 app.get("/profile", isAuth, (req, res) => {
   res.render("profile", { username: req.session.username });
 });
-
 
 app.post("/logout", (req, res) => {
   req.session.destroy((err) => {
@@ -149,7 +152,7 @@ app.get("/loginAdmin", (req, res) => {
 
 app.post("/loginAdmin", async (req, res) => {
   const { adminKey } = req.body;
-  
+
   if (adminKey === "abc123superkey") {
     req.session.isAuth = true; // wajib tambahkan ini juga!
     req.session.role = "admin"; // simpan role di session

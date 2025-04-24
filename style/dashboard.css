@@ -1,0 +1,80 @@
+:root {
+  --primary: #fff085;
+  --secondary: #fcb454;
+  --bg: #fef9e1;
+  --font: #454545;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-decoration: none;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg);
+  /* min-height: 2000px; */
+}
+
+/* navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  /* margin: 1.4rem; */
+  background-color: var(--secondary);
+  padding: 1.4rem 7%;
+  margin-bottom: 2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .navbar-logo {
+  font-weight: bold;
+  font-size: 2.5rem;
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.navbar span {
+  color: var(--bg);
+  font-size: 3.5rem;
+}
+
+.user {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.user a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.event-section {
+  /* background-color: red; */
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+.event {
+  display: flex;
+  background-color: var(--secondary);
+  max-width: 20rem;
+  max-height: 40rem;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event img {
+  border-radius: 10px;
+}
