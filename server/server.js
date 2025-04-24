@@ -164,11 +164,11 @@ app.post("/loginAdmin", async (req, res) => {
   const { adminKey } = req.body;
 
   if (adminKey === "abc123superkey") {
-    req.session.isAuth = true; // wajib tambahkan ini juga!
+    req.session.isAuth = true;
     req.session.role = "admin"; // simpan role di session
-    req.session.isAdminKey = adminKey; // Simpan kode di session
+    req.session.isAdminKey = adminKey; 
 
-    res.redirect("/admin"); // ARAHKAN KE DASHBOARD ADMIN
+    res.redirect("/admin"); 
   } else {
     res.render("loginAdmin", { error: "Kode admin salah!" });
   }
@@ -178,7 +178,7 @@ app.post("/loginAdmin", async (req, res) => {
 app.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) throw err;
-    res.redirect("/login"); // ← redirect ke login page
+    res.redirect("/login");
   });
 });
 
