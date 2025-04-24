@@ -66,9 +66,13 @@
     <a href="/admin/events/new">
       <button>+ Tambah Event</button>
     </a>
+    <!-- Tombol logout -->
+    <form action="/logout" method="POST" class="logout-button">
+      <button type="submit">Logout</button>
+    </form>
 
     <!-- Section: Event Terbuka -->
-    <h2>Event yang Masih Dibuka</h2>
+    <h2>Event yang Dibuka</h2>
 
     <!-- Input pencarian -->
     <input
@@ -105,6 +109,11 @@
         </form>
       </li>
       <% }) %>
+
+      <% if (openEvents.length === 0) { %>
+      <li class="event-item" style="text-align: center">
+        Tidak ada event yang tersedia.  <br />
+        <% } %>
     </ul>
 
     <!-- Section: Event Ditutup -->
@@ -133,12 +142,13 @@
         </form>
       </li>
       <% }) %>
+
+      <% if (closedEvents.length === 0) { %>
+      <li class="event-item" style="text-align: center">
+        Tidak ada event yang sudah ditutup. 
+      <% } %>
     </ul>
 
-    <!-- Tombol logout -->
-    <form action="/logout" method="POST" class="logout-button">
-      <button type="submit">Logout</button>
-    </form>
 
     <!-- Script pencarian manual -->
     <script>

@@ -84,9 +84,23 @@ body {
   background-color: var(--bg);
 }
 
+h2 {
+  padding-top: 1rem;   
+}
 .admin {
   text-align: center;
   padding-top: 10rem;
+}
+
+h3 {
+  margin: 1rem; 
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: 0.3s;
+  padding-bottom: 1rem;
 }
 
 .admin button {

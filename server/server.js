@@ -85,8 +85,18 @@ app.get("/register", (req, res) => {
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
+  // Validasi password
+  const isLengthValid = password.length >= 8 && password.length <= 15;
+  const containsNumber = /\d/.test(password);
+
+  if (!isLengthValid || !containsNumber) {
+    return res.render("register", {
+      error: "Password harus 8-15 karakter dan mengandung minimal 1 angka.",
+    });
+  }
+
   let user = await UserModel.findOne({ email });
-  if (user) return res.redirect("/register");
+  if (user) return res.render("register", { error: "Email sudah digunakan." });
 
   const hashedPassword = await bcrypt.hash(password, 12);
   const role = username === "admin" ? "admin" : "user";

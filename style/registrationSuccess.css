@@ -1,0 +1,52 @@
+:root {
+    --primary: #fff085;
+    --secondary: #fcb454;
+    --bg: #fef9e1;
+    --font: #454545;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--bg);
+    color: var(--font);
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+  
+  /* Heading */
+  h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Teks */
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Tombol */
+  button {
+    background-color: var(--secondary);
+    color: var(--bg);
+    font-weight: bold;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1rem;
+  }
+  
+  button:hover {
+    background-color: #e69c38;
+  }
+  

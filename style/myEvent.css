@@ -1,0 +1,68 @@
+:root {
+    --primary: #fff085;
+    --secondary: #fcb454;
+    --bg: #fef9e1;
+    --font: #454545;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--bg);
+    color: var(--font);
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  /* Judul halaman */
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Teks jika tidak ada event */
+  p {
+    font-size: 1.1rem;
+    color: #777;
+    margin-bottom: 2rem;
+  }
+  
+  /* Daftar event */
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 600px;
+    text-align: left;
+  }
+  
+  li {
+    background-color: var(--secondary);
+    margin: 1rem auto;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Link kembali */
+  a {
+    display: inline-block;
+    margin-top: 2rem;
+    color: var(--font);
+    font-weight: 500;
+    transition: 0.3s;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+    color: #a86d2c;
+  }
+  
