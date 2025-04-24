@@ -1,0 +1,82 @@
+:root {
+  --primary: #fff085;
+  --secondary: #fcb454;
+  --bg: #fef9e1;
+  --font: #454545;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-decoration: none;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg);
+  color: var(--font);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--secondary);
+  padding: 1.4rem 7%;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.navbar .navbar-logo {
+  font-weight: bold;
+  font-size: 2.5rem;
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.navbar span {
+  color: var(--bg);
+  font-size: 3.5rem;
+}
+
+.center-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.center-page .detail {
+  background-color: var(--secondary);
+  width: 100%;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail .image {
+  /* background-color: blue; */
+  display: flex;
+  min-height: 20rem;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.detail .image .text {
+  padding-left: 2rem;
+}
+
+.regis {
+  display: flex;
+  justify-content: center;
+  padding: 20px 20px;
+}
+
+.regis button {
+  font-size: 1rem;
+  font-weight: bold;
+  border-style: none;
+  border-radius: 20px;
+  padding: 1rem;
+  color: #fcb454;
+}

@@ -1,24 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Detail Event</title>
-</head>
-<body>
-  <h1><%= event.title %></h1>
-  <img src="<%= event.poster %>" width="200" />
-  <p><strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %></p>
-  <p><%= event.description %></p>
-  <p>Status: <%= event.isRegistrationClosed ? "Registrasi Ditutup" : "Terbuka" %></p>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Detail Event</title>
+    <link rel="stylesheet" href="/style/eventDetail.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="#" class="navbar-logo"><span>f</span>estify.</a>
+    </nav>
+    <div class="center-page">
+      <section class="detail">
+        <div class="container">
+          <div class="title">
+            <h1><%= event.title %></h1>
+          </div>
+          <div class="image">
+            <img src="<%= event.poster %>" width="200" />
+            <div class="text">
+              <p>
+                <strong>Tanggal:</strong> <%= new
+                Date(event.date).toDateString() %>
+              </p>
 
-  <% if (!event.isRegistrationClosed) { %>
-    <form action="/event/<%= event._id %>/register" method="GET">
-      <button type="submit">Daftar</button>
-    </form>
-  <% } else { %>
-    <p style="color:red;">Registrasi sudah ditutup.</p>
-  <% } %>
+              <p><%= event.description %></p>
+              <p>
+                Status: <%= event.isRegistrationClosed ? "Registrasi Ditutup" :
+                "Terbuka" %>
+              </p>
+            </div>
+          </div>
+        </div>
 
-  <a href="/dashboard">← Kembali</a>
-</body>
+        <div class="regis">
+          <% if (!event.isRegistrationClosed) { %>
+          <form action="/event/<%= event._id %>/register" method="GET">
+            <button type="submit">Daftar</button>
+          </form>
+          <% } else { %>
+          <p style="color: red">Registrasi sudah ditutup.</p>
+          <% } %>
+        </div>
+      </section>
+    </div>
+
+    <a href="/dashboard">← Kembali</a>
+  </body>
 </html>
