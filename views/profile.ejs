@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Profil</title>
-</head>
-<body>
-  <h2>Hi, <%= username %> 👋</h2>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Profil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="/style/profile.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="#" class="navbar-logo"><span>f</span>estify.</a>
+    </nav>
+    <h2>Hi, <%= username %> 👋</h2>
 
-  <form action="/my-events" method="GET">
-    <button type="submit">Event Saya</button>
-  </form>
+    <form action="/my-events" method="GET">
+      <button type="submit">Event Saya</button>
+    </form>
 
-  <form action="/logout" method="POST">
-    <button type="submit">Logout</button>
-  </form>
+    <form action="/logout" method="POST">
+      <button type="submit">Logout</button>
+    </form>
 
-  <a href="/dashboard">← Kembali ke Dashboard</a>
-</body>
+    <a href="/dashboard">← Kembali ke Dashboard</a>
+  </body>
 </html>
