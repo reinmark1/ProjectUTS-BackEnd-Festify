@@ -11,16 +11,27 @@
     <nav class="navbar">
       <a href="#" class="navbar-logo"><span>f</span>estify.</a>
     </nav>
-    <h2>Hi, <%= username %> 👋</h2>
 
-    <form action="/my-events" method="GET">
-      <button type="submit">Event Saya</button>
-    </form>
+    <section class="all">
+      <div class="nama">
+        <h2>Hi, <%= username %> 👋</h2>
+      </div>
 
-    <form action="/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
+      <div class="event-saya">
+        <form action="/my-events" method="GET">
+          <button type="submit">Event Saya</button>
+        </form>
+      </div>
 
-    <a href="/dashboard">← Kembali ke Dashboard</a>
+      <div class="logout">
+        <form action="/logout" method="POST">
+          <button type="submit">Logout</button>
+        </form>
+      </div>
+    </section>
+
+    <div class="kembali">
+      <a href="/dashboard">← Kembali</a>
+    </div>
   </body>
 </html>

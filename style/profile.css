@@ -40,3 +40,66 @@ body {
   color: var(--bg);
   font-size: 3.5rem;
 }
+
+.all {
+  /* background-color: red; */
+  padding-left: 6rem;
+}
+
+.nama {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.event-saya button {
+  padding: 10px;
+  border-style: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.event-saya {
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.logout {
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.logout button {
+  padding: 10px;
+  border-style: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.event-saya:hover button,
+.logout:hover button {
+  background-color: var(--secondary);
+}
+
+.kembali {
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kembali a {
+  /* display: inline-block; */
+  margin-top: 2rem;
+  color: var(--font);
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #a86d2c;
+}
