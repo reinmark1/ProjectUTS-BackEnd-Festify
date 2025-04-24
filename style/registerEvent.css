@@ -1,0 +1,83 @@
+:root {
+    --primary: #fff085;
+    --secondary: #fcb454;
+    --bg: #fef9e1;
+    --font: #454545;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--bg);
+    color: var(--font);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Judul */
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  /* Form container */
+  form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  /* Label dan input */
+  label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 0.6rem;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  /* Textarea khusus */
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  /* Tombol */
+  button {
+    margin-top: 1.5rem;
+    background-color: var(--secondary);
+    color: var(--bg);
+    font-weight: bold;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+  }
+  
+  button:hover {
+    background-color: #e69c38;
+  }
+  
