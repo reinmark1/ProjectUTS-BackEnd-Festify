@@ -1,150 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard | Node Auth</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    button {
-      padding: 10px 17px;
-      margin-top: 1rem;
-      font-size: 1rem;
-      background: #eee;
-      border: 1px solid #333;
-      cursor: pointer;
-    }
-
-    .event-section {
-      margin-bottom: 30px;
-    }
-
-    .event-box {
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 6px;
-    }
-
-    .closed {
-      background-color: #f9f9f9;
-      opacity: 0.8;
-    }
-
-    select, input[type="text"] {
-      margin: 10px 0;
-      padding: 8px;
-      font-size: 1rem;
-      width: 100%;
-    }
-  </style>
-</head>
-<body>
-  <h1>Selamat datang, <%= username %>!</h1>
-
-  <a href="/profile">
-    <button>Profil</button>
-  </a>
-
-  <!-- Event yang Masih Terbuka -->
-  <section class="event-section">
-    <h2>Event yang Bisa Kamu Daftari</h2>
-
-    <input type="text" id="searchInput" placeholder="Cari event berdasarkan judul, deskripsi, tanggal..." />
-    <select id="sortSelect">
-      <option value="asc">Tanggal Terdekat</option>
-      <option value="desc">Tanggal Terjauh</option>
-    </select>
-
-    <div id="openEventsContainer">
-      <% if (openEvents.length > 0) { %>
-        <% openEvents.forEach(event => { %>
-          <div class="event-box"
-               data-title="<%= event.title.toLowerCase() %>"
-               data-description="<%= event.description.toLowerCase() %>"
-               data-date="<%= new Date(event.date).toISOString() %>">
-            <img src="<%= event.poster %>" alt="Poster <%= event.title %>" width="200" style="display: block; margin-bottom: 10px;" />
-            <h3><%= event.title %></h3>
-            <p><strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %></p>
-            <p><%= event.description %></p>
-            <a href="/event/<%= event._id %>">
-              <button>Lihat Detail</button>
-            </a>
-          </div>
-        <% }) %>
-      <% } else { %>
-        <p>Tidak ada event yang masih terbuka.</p>
-      <% } %>
-    </div>
-  </section>
-
-  <!-- Event yang Sudah Ditutup -->
-  <section class="event-section">
-    <h2>Event yang Sudah Ditutup</h2>
-    <% if (closedEvents.length > 0) { %>
-      <% closedEvents.forEach(event => { %>
-        <div class="event-box closed">
-          <img src="<%= event.poster %>" alt="Poster <%= event.title %>" width="200" style="display: block; margin-bottom: 10px;" />
-          <h3><%= event.title %></h3>
-          <p><strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %></p>
-          <p><%= event.description %></p>
-          <p><em>Status: Registrasi Ditutup</em></p>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p>Belum ada event yang ditutup.</p>
-    <% } %>
-  </section>
-
-  <!-- Logout -->
-  <form method="POST" action="/logout">
-    <button type="submit">Logout</button>
-  </form>
-
-  <!-- SCRIPT: Sorting & Search -->
-  <script>
-    const sortSelect = document.getElementById('sortSelect');
-    const searchInput = document.getElementById('searchInput');
-    const container = document.getElementById('openEventsContainer');
-
-    // Simpan semua event asli di awal
-    const originalItems = Array.from(container.querySelectorAll('.event-box'));
-
-    function filterAndSort() {
-      const query = searchInput.value.trim().toLowerCase();
-      const order = sortSelect.value;
-
-      // Ambil salinan dari event asli
-      let itemsToDisplay = [...originalItems];
-
-      // FILTER jika query ada
-      if (query) {
-        itemsToDisplay = itemsToDisplay.filter(item => {
-          const title = item.dataset.title;
-          const desc = item.dataset.description;
-          const date = new Date(item.dataset.date).toDateString().toLowerCase();
-          return title.includes(query) || desc.includes(query) || date.includes(query);
-        });
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Node Auth</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
       }
 
-      // SORT berdasarkan tanggal
-      itemsToDisplay.sort((a, b) => {
-        const dateA = new Date(a.dataset.date);
-        const dateB = new Date(b.dataset.date);
-        return order === 'asc' ? dateA - dateB : dateB - dateA;
-      });
+      button {
+        padding: 10px 17px;
+        margin-top: 1rem;
+        font-size: 1rem;
+        background: #eee;
+        border: 1px solid #333;
+        cursor: pointer;
+      }
 
-      // Tampilkan ulang event yang sesuai
-      container.innerHTML = '';
-      itemsToDisplay.forEach(item => container.appendChild(item));
-    }
+      .event-section {
+        margin-bottom: 30px;
+      }
 
-    sortSelect.addEventListener('change', filterAndSort);
-    searchInput.addEventListener('input', filterAndSort);
-  </script>
-</body>
+      .event-box {
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 6px;
+      }
+
+      .closed {
+        background-color: #f9f9f9;
+        opacity: 0.8;
+      }
+
+      select,
+      input[type="text"] {
+        margin: 10px 0;
+        padding: 8px;
+        font-size: 1rem;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Selamat datang, <%= username %>!</h1>
+
+    <a href="/profile">
+      <button>Profil</button>
+    </a>
+
+    <!-- Event yang Masih Terbuka -->
+    <section class="event-section">
+      <h2>Event yang Bisa Kamu Daftari</h2>
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Cari event berdasarkan judul, deskripsi, tanggal..."
+      />
+      <select id="sortSelect">
+        <option value="asc">Tanggal Terdekat</option>
+        <option value="desc">Tanggal Terjauh</option>
+      </select>
+
+      <div id="openEventsContainer">
+        <% if (openEvents.length > 0) { %> <% openEvents.forEach(event => { %>
+        <div
+          class="event-box"
+          data-title="<%= event.title.toLowerCase() %>"
+          data-description="<%= event.description.toLowerCase() %>"
+          data-date="<%= new Date(event.date).toISOString() %>"
+        >
+          <img
+            src="<%= event.poster %>"
+            alt="Poster <%= event.title %>"
+            width="200"
+            style="display: block; margin-bottom: 10px"
+          />
+          <h3><%= event.title %></h3>
+          <p>
+            <strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %>
+          </p>
+          <p><%= event.description %></p>
+          <a href="/event/<%= event._id %>">
+            <button>Lihat Detail</button>
+          </a>
+        </div>
+        <% }) %> <% } else { %>
+        <p>Tidak ada event yang masih terbuka.</p>
+        <% } %>
+      </div>
+    </section>
+
+    <!-- tes github -->
+
+    <!-- Event yang Sudah Ditutup -->
+    <section class="event-section">
+      <h2>Event yang Sudah Ditutup</h2>
+      <% if (closedEvents.length > 0) { %> <% closedEvents.forEach(event => { %>
+      <div class="event-box closed">
+        <img
+          src="<%= event.poster %>"
+          alt="Poster <%= event.title %>"
+          width="200"
+          style="display: block; margin-bottom: 10px"
+        />
+        <h3><%= event.title %></h3>
+        <p>
+          <strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %>
+        </p>
+        <p><%= event.description %></p>
+        <p><em>Status: Registrasi Ditutup</em></p>
+      </div>
+      <% }) %> <% } else { %>
+      <p>Belum ada event yang ditutup.</p>
+      <% } %>
+    </section>
+
+    <!-- Logout -->
+    <form method="POST" action="/logout">
+      <button type="submit">Logout</button>
+    </form>
+
+    <!-- SCRIPT: Sorting & Search -->
+    <script>
+      const sortSelect = document.getElementById("sortSelect");
+      const searchInput = document.getElementById("searchInput");
+      const container = document.getElementById("openEventsContainer");
+
+      // Simpan semua event asli di awal
+      const originalItems = Array.from(
+        container.querySelectorAll(".event-box")
+      );
+
+      function filterAndSort() {
+        const query = searchInput.value.trim().toLowerCase();
+        const order = sortSelect.value;
+
+        // Ambil salinan dari event asli
+        let itemsToDisplay = [...originalItems];
+
+        // FILTER jika query ada
+        if (query) {
+          itemsToDisplay = itemsToDisplay.filter((item) => {
+            const title = item.dataset.title;
+            const desc = item.dataset.description;
+            const date = new Date(item.dataset.date)
+              .toDateString()
+              .toLowerCase();
+            return (
+              title.includes(query) ||
+              desc.includes(query) ||
+              date.includes(query)
+            );
+          });
+        }
+
+        // SORT berdasarkan tanggal
+        itemsToDisplay.sort((a, b) => {
+          const dateA = new Date(a.dataset.date);
+          const dateB = new Date(b.dataset.date);
+          return order === "asc" ? dateA - dateB : dateB - dateA;
+        });
+
+        // Tampilkan ulang event yang sesuai
+        container.innerHTML = "";
+        itemsToDisplay.forEach((item) => container.appendChild(item));
+      }
+
+      sortSelect.addEventListener("change", filterAndSort);
+      searchInput.addEventListener("input", filterAndSort);
+    </script>
+  </body>
 </html>
