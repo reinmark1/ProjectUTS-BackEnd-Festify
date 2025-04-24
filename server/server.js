@@ -172,7 +172,6 @@ app.post("/logout", (req, res) => {
   });
 });
 
-// Router untuk fitur admin
 app.use("/admin", adminRoutes);
 app.use("/", eventRoutes);
 
