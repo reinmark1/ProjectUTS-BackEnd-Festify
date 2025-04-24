@@ -52,6 +52,7 @@ body {
   max-width: none;
   display: flex;
   flex-direction: column;
+  border-radius: 20px;
 }
 
 .detail .image {
@@ -60,10 +61,16 @@ body {
   min-height: 20rem;
   justify-content: flex-start;
   overflow: hidden;
+  padding-left: 40px;
 }
 
 .detail .image .text {
   padding-left: 2rem;
+}
+
+.detail .container .title {
+  padding-left: 40px;
+  padding-top: 20px;
 }
 
 .regis {
@@ -79,4 +86,24 @@ body {
   border-radius: 20px;
   padding: 1rem;
   color: #fcb454;
+}
+
+.kembali {
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kembali a {
+  /* display: inline-block; */
+  margin-top: 2rem;
+  color: var(--font);
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #a86d2c;
 }
