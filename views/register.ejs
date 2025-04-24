@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register | Node Auth</title>
+    <title>Register</title>
     <link rel="stylesheet" href="/style/login-register.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,7 +15,12 @@
     </nav>
     <section class="container">
       <div class="login-form">
-        <h3>Register</h3>
+        <h2>Register</h2>
+        
+        <% if (typeof error !== "undefined") { %>
+          <p style="color: red;"><%= error %></p>
+        <% } %>
+        
         <form action="/register" method="POST">
           <div class="input-group">
             <label for="username">Username:</label>
@@ -31,7 +36,7 @@
           </div>
           <button>Register</button>
         </form>
-        <h3>sudah ada akun?</h3>
+        <h4> Sudah ada akun?</h4>
         <a href="/login">Login</a>
       </div>
     </section>
