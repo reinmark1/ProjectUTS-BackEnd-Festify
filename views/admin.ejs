@@ -1,84 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Admin</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
 
-    h2 {
-      margin-top: 30px;
-    }
+      h2 {
+        margin-top: 30px;
+      }
 
-    .event-list {
-      list-style: none;
-      padding: 0;
-    }
+      .event-list {
+        list-style: none;
+        padding: 0;
+      }
 
-    .event-item {
-      border: 1px solid #ccc;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 6px;
-    }
+      .event-item {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+      }
 
-    .event-item img {
-      display: block;
-      margin-bottom: 10px;
-    }
+      .event-item img {
+        display: block;
+        margin-bottom: 10px;
+      }
 
-    .event-item p {
-      margin: 5px 0;
-    }
+      .event-item p {
+        margin: 5px 0;
+      }
 
-    .event-item form {
-      display: inline-block;
-      margin-right: 10px;
-    }
+      .event-item form {
+        display: inline-block;
+        margin-right: 10px;
+      }
 
-    button {
-      padding: 6px 12px;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
+      button {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
 
-    .logout-button {
-      margin-top: 40px;
-    }
+      .logout-button {
+        margin-top: 40px;
+      }
 
-    #searchOpen {
-      padding: 8px;
-      width: 100%;
-      margin-bottom: 10px;
-      font-size: 1rem;
-    }
-  </style>
-</head>
-<body>
-  <h1>Dashboard Admin</h1>
+      #searchOpen {
+        padding: 8px;
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Dashboard Admin</h1>
 
-  <!-- Tombol tambah event -->
-  <a href="/admin/events/new">
-    <button>+ Tambah Event</button>
-  </a>
+    <!--tes github  -->
+    <!-- Tombol tambah event -->
+    <a href="/admin/events/new">
+      <button>+ Tambah Event</button>
+    </a>
 
-  <!-- Section: Event Terbuka -->
-  <h2>Event yang Masih Dibuka</h2>
+    <!-- Section: Event Terbuka -->
+    <h2>Event yang Masih Dibuka</h2>
 
-  <!-- Input pencarian -->
-  <input type="text" id="searchOpen" placeholder="Cari event berdasarkan judul, deskripsi, dll..." />
+    <!-- Input pencarian -->
+    <input
+      type="text"
+      id="searchOpen"
+      placeholder="Cari event berdasarkan judul, deskripsi, dll..."
+    />
 
-  <!-- List event terbuka -->
-  <ul class="event-list" id="openEventsList">
-    <% openEvents.forEach(event => { %>
+    <!-- List event terbuka -->
+    <ul class="event-list" id="openEventsList">
+      <% openEvents.forEach(event => { %>
       <li class="event-item">
-        <img src="<%= event.poster %>" width="200" alt="Poster <%= event.title %>">
+        <img
+          src="<%= event.poster %>"
+          width="200"
+          alt="Poster <%= event.title %>"
+        />
         <strong><%= event.title %></strong><br />
-        <p><strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %></p>
+        <p>
+          <strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %>
+        </p>
         <p><strong>Deskripsi:</strong> <%= event.description %></p>
         <p><strong>Status:</strong> Terbuka</p>
 
@@ -93,17 +104,23 @@
           <button>Tutup Registrasi</button>
         </form>
       </li>
-    <% }) %>
-  </ul>
+      <% }) %>
+    </ul>
 
-  <!-- Section: Event Ditutup -->
-  <h2>Event yang Sudah Berlalu / Ditutup</h2>
-  <ul class="event-list">
-    <% closedEvents.forEach(event => { %>
-      <li class="event-item" style="background-color: #f5f5f5;">
-        <img src="<%= event.poster %>" width="200" alt="Poster <%= event.title %>">
+    <!-- Section: Event Ditutup -->
+    <h2>Event yang Sudah Berlalu / Ditutup</h2>
+    <ul class="event-list">
+      <% closedEvents.forEach(event => { %>
+      <li class="event-item" style="background-color: #f5f5f5">
+        <img
+          src="<%= event.poster %>"
+          width="200"
+          alt="Poster <%= event.title %>"
+        />
         <strong><%= event.title %></strong><br />
-        <p><strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %></p>
+        <p>
+          <strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %>
+        </p>
         <p><strong>Deskripsi:</strong> <%= event.description %></p>
         <p><strong>Status:</strong> Registrasi Ditutup</p>
 
@@ -115,26 +132,30 @@
           <button>Edit</button>
         </form>
       </li>
-    <% }) %>
-  </ul>
+      <% }) %>
+    </ul>
 
-  <!-- Tombol logout -->
-  <form action="/logout" method="POST" class="logout-button">
-    <button type="submit">Logout</button>
-  </form>
+    <!-- Tombol logout -->
+    <form action="/logout" method="POST" class="logout-button">
+      <button type="submit">Logout</button>
+    </form>
 
-  <!-- Script pencarian manual -->
-  <script>
-    // Menjalankan filter saat pengguna mengetik
-    document.getElementById("searchOpen").addEventListener("input", function () {
-      const query = this.value.toLowerCase(); // Ambil teks input
-      const items = document.querySelectorAll("#openEventsList .event-item"); // Ambil semua elemen event
+    <!-- Script pencarian manual -->
+    <script>
+      // Menjalankan filter saat pengguna mengetik
+      document
+        .getElementById("searchOpen")
+        .addEventListener("input", function () {
+          const query = this.value.toLowerCase(); // Ambil teks input
+          const items = document.querySelectorAll(
+            "#openEventsList .event-item"
+          ); // Ambil semua elemen event
 
-      items.forEach(item => {
-        const text = item.innerText.toLowerCase(); // Ambil seluruh isi teks dari tiap item
-        item.style.display = text.includes(query) ? "" : "none"; // Tampilkan atau sembunyikan
-      });
-    });
-  </script>
-</body>
+          items.forEach((item) => {
+            const text = item.innerText.toLowerCase(); // Ambil seluruh isi teks dari tiap item
+            item.style.display = text.includes(query) ? "" : "none"; // Tampilkan atau sembunyikan
+          });
+        });
+    </script>
+  </body>
 </html>

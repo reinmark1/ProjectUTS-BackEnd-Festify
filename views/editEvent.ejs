@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h2>Edit Event</h2>
-        <form action="/admin/events/<%= event._id %>/update" method="POST">
-        <label>Judul:</label>
-        <input type="text" name="title" value="<%= event.title %>" required /><br />
+    <form action="/admin/events/<%= event._id %>/update" method="POST">
+      <label>Judul:</label>
+      <input
+        type="text"
+        name="title"
+        value="<%= event.title %>"
+        required
+      /><br />
 
-        <label>Tanggal:</label>
-        <input type="date" name="date" value="<%= event.date.toISOString().slice(0, 10) %>" required /><br />
+      <label>Tanggal:</label>
+      <input
+        type="date"
+        name="date"
+        value="<%= event.date.toISOString().slice(0, 10) %>"
+        required
+      /><br />
 
-        <label>Deskripsi:</label>
-        <textarea name="description" required><%= event.description %></textarea><br />
+      <label>Deskripsi:</label>
+      <textarea name="description" required><%= event.description %></textarea
+      ><br />
 
-        <button type="submit">Simpan Perubahan</button>
+      <button type="submit">Simpan Perubahan</button>
     </form>
     <a href="/admin">Kembali ke Dashboard</a>
-
-</body>
+    <!-- pns -->
+  </body>
 </html>
