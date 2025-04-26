@@ -58,10 +58,14 @@ body {
 .detail .image {
   /* background-color: blue; */
   display: flex;
-  min-height: 20rem;
+  height: auto;
   justify-content: flex-start;
   overflow: hidden;
   padding-left: 40px;
+}
+
+.title{
+  padding-bottom: 0.5rem ;
 }
 
 .detail .image .text {

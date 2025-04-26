@@ -106,10 +106,10 @@ router.post("/registrants/:id/delete", isAuth, isAdmin, async (req, res) => {
     const regId = req.params.id;
     const registration = await Registration.findByIdAndDelete(regId);
 
-    res.redirect("back"); // kembali ke halaman sebelumnya
+    res.redirect("/admin/registrants");
   } catch (err) {
     console.error("Gagal menghapus pendaftar:", err);
-    res.redirect("back");
+    res.redirect("/admin/registrants");
   }
 });
 

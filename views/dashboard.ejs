@@ -1,58 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Festify.</title>
-    <link rel="stylesheet" href="/style/dashboard.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  </head>
-  <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-      <a href="/" class="navbar-logo"><span>f</span>estify.</a>
-      <div class="user">
-        <a href="/profile">Profil</a>
-      </div>
-    </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Festify.</title>
+  <link rel="stylesheet" href="/style/dashboard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="/" class="navbar-logo"><span>f</span>estify.</a>
+    <div class="user">
+      <a href="/profile">Profil</a>
+    </div>
+  </nav>
 
-    <h1 style="text-align: center">Selamat datang, <%= username %>!</h1>
+  <h1 style="text-align: center">Selamat datang, <%= username %>!</h1>
 
-    <!-- Event Terbuka -->
-    <section class="event-section">
-      <h2>Jelajahi!</h2>
+  <!-- Event Terbuka -->
+  <section class="event-section">
+    <h2>Jelajahi!</h2>
 
-      <div class="search">
-        <input type="text" id="searchInput" placeholder="Cari event..." />
-        <select id="sortSelect">
-          <option value="asc">Tanggal Terdekat</option>
-          <option value="desc">Tanggal Terjauh</option>
-        </select>
-      </div>
+    <div class="search">
+      <input type="text" id="searchInput" placeholder="Cari event..." />
+      <select id="sortSelect">
+        <option value="asc">Tanggal Terdekat</option>
+        <option value="desc">Tanggal Terjauh</option>
+      </select>
+    </div>
 
-      <div id="openEventsContainer">
-        <% if (openEvents.length > 0) { %> <% openEvents.forEach(event => { %>
-        <div
-          class="event-box"
-          data-title="<%= event.title.toLowerCase() %>"
-          data-description="<%= event.description.toLowerCase() %>"
-          data-date="<%= new Date(event.date).toISOString() %>"
-        >
-          <img src="<%= event.poster %>" alt="Poster <%= event.title %>" />
-          <h3><%= event.title %></h3>
-          <p>
-            <strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %>
-          </p>
-          <!-- <p><%= event.description %></p> -->
-          <a href="/event/<%= event._id %>">
-            <button>Lihat Detail</button>
-          </a>
-        </div>
-        <% }) %> <% } else { %>
+    <div id="openEventsContainer">
+      <% if (openEvents.length > 0) { %>
+        <% openEvents.forEach(event => { %>
+          <div
+            class="event-box"
+            data-title="<%= event.title.toLowerCase() %>"
+            data-description="<%= event.description.toLowerCase() %>"
+            data-date="<%= new Date(event.date).toISOString() %>"
+          >
+            <img src="<%= event.poster %>" alt="Poster <%= event.title %>" />
+            <h3><%= event.title %></h3>
+            <p><strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %></p>
+            <a href="/event/<%= event._id %>">
+              <button>Lihat Detail</button>
+            </a>
+          </div>
+        <% }) %>
+      <% } else { %>
         <p style="text-align: center">Tidak ada event tersedia.</p>
-        <% } %>
-      </div>
-    </section>
-  </body>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- Event Sudah Ditutup -->
+  <section class="event-section" style="margin-top: 50px;">
+    <h2 style="text-align: center;">Event yang Sudah Ditutup</h2>
+
+    <div id="closedEventsContainer">
+      <% if (closedEvents.length > 0) { %>
+        <% closedEvents.forEach(event => { %>
+          <div class="event-box closed">
+            <img src="<%= event.poster %>" alt="Poster <%= event.title %>" />
+            <h3><%= event.title %></h3>
+            <p><strong>Tanggal:</strong> <%= new Date(event.date).toDateString() %></p>
+            <p><em>Status: Registrasi Ditutup</em></p>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p style="text-align: center">Belum ada event yang ditutup.</p>
+      <% } %>
+    </div>
+  </section>
+
+  <script>
+    const sortSelect = document.getElementById("sortSelect");
+    const searchInput = document.getElementById("searchInput");
+    const container = document.getElementById("openEventsContainer");
+    const originalItems = Array.from(container.querySelectorAll(".event-box"));
+
+    function filterAndSort() {
+      const query = searchInput.value.trim().toLowerCase();
+      const order = sortSelect.value;
+
+      let itemsToDisplay = [...originalItems];
+
+      if (query) {
+        itemsToDisplay = itemsToDisplay.filter((item) => {
+          const title = item.dataset.title;
+          const desc = item.dataset.description;
+          const date = new Date(item.dataset.date).toDateString().toLowerCase();
+          return title.includes(query) || desc.includes(query) || date.includes(query);
+        });
+      }
+
+      itemsToDisplay.sort((a, b) => {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+        return order === "asc" ? dateA - dateB : dateB - dateA;
+      });
+
+      container.innerHTML = "";
+      itemsToDisplay.forEach((item) => container.appendChild(item));
+    }
+
+    sortSelect.addEventListener("change", filterAndSort);
+    searchInput.addEventListener("input", filterAndSort);
+  </script>
+</body>
 </html>
