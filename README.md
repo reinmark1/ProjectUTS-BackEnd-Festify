@@ -97,7 +97,5 @@ Open your browser and visit: **`http://localhost:3000`**
 To test the **Organizer / Admin Dashboard** without manual database role configuration, navigate to `/loginAdmin` and log in using the demo admin key:
 
 * **Admin Access Key:** `abc123superkey`
-
-*(Note: Kept accessible in the repository for demonstration and portfolio evaluation purposes.)*
-
+* 
 ---
